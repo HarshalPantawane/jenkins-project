@@ -2,9 +2,9 @@ pipeline {
     agent any 
 
     parameters {
-        string(name: 'App-version', description: "provide application version")
+        string(name: 'App-Version', description: "provide application version")
     }
-    
+
     stages {
         stage('Checkout') {
             steps {
@@ -42,7 +42,7 @@ pipeline {
             steps{
                 sh """
                 echo '----Building Docker image----'
-                docker build -t datastore:${App_version} .
+                docker build -t datastore:${App_Version} .
                 echo '----Docker image build successfully---'
                 """
             }
