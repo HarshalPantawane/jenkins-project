@@ -2,8 +2,9 @@ pipeline {
     agent any 
 
     parameters {
-        string(name: 'App-Version', description: "provide application version")
+      string description: 'provide application version', name: 'App_Version'
     }
+
 
     stages {
         stage('Checkout') {
