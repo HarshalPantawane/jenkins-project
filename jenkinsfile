@@ -39,15 +39,24 @@ pipeline {
                 """
             }
         }
-        stage("Docker Image Build") {
+        stage('Docker Image Build') {
             steps {
                 sh """
                 echo "-------- Building Docker Image --------"
                 docker build -t datastore:"${App_Version}" .
                 echo "-------- Image Successfully Built --------"
                 """
-      }
-    }
+            }
+        }
+        stage('Docker Image Scan'){
+            steps {
+                sh """
+                echo "------Scanning Docker Image-----"
+                trivy image datastore:"${App_Version}"
+                echo "------Scanning Docker Image Complete---"
+                """
+            }
+        }
     }
 
 }
