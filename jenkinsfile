@@ -80,7 +80,7 @@ pipeline {
                 echo '---Docker Login Successful---'
 
                 echo '-----Pushing Docker Image To Docker Hub---'
-                docker push 890871562773/datastore:"${App_Version}"
+                docker push harshalpantawane/datastore:"${App_Version}"
                 echo '-----Docker Image Pushed Successfully---'
                 """
             }
