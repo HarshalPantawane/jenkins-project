@@ -3,13 +3,12 @@ pipeline {
     environment {
         TMPDIR = "/jenkins-data/tmp"
         TRIVY_CACHE_DIR = "/jenkins-data/trivy-cache"
+        DOCKERHUB_CREDENTIALS = credentials("dockerhub")
     }
     parameters {
       string (description: "provide application version", name: "App_Version") 
     }
-    environment {
-        DOCKERHUB_CREDENTIALS = credentials("dockerhub")
-    }
+
 
 
     stages {
