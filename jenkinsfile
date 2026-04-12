@@ -1,5 +1,8 @@
 pipeline {
     agent any 
+     environment {
+        TMPDIR = "/jenkins-data/tmp"
+        TRIVY_CACHE_DIR = "/jenkins-data/trivy-cache"
 
     parameters {
       string (description: "provide application version", name: "App_Version") 
@@ -52,6 +55,7 @@ pipeline {
             steps {
                 sh """
                 echo "------Scanning Docker Image-----"
+                mkdir -p /jenkins-data/tmp
                 trivy image datastore:"${App_Version}"
                 echo "------Scanning Docker Image Complete---"
                 """
