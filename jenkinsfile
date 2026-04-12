@@ -76,7 +76,7 @@ pipeline {
             steps{
                 sh """
                 echo '---Logging To Docker Hub---'
-                docker login -u $DOCKERHUB_CREDENTIALS_USR -password $DOCKERHUB_CREDENTIALS_PSW
+                docker login -u $DOCKERHUB_CREDENTIALS_USR --password $DOCKERHUB_CREDENTIALS_PSW
                 echo '---Docker Login Successful---'
 
                 echo '-----Pushing Docker Image To Docker Hub---'
