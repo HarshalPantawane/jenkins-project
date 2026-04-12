@@ -3,7 +3,7 @@ pipeline {
      environment {
         TMPDIR = "/jenkins-data/tmp"
         TRIVY_CACHE_DIR = "/jenkins-data/trivy-cache"
-
+       }
     parameters {
       string (description: "provide application version", name: "App_Version") 
     }
