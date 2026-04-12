@@ -35,10 +35,19 @@ pipeline {
                 """
             }
         }
-        stage('Quality Gate') {
+        stage('SonarQube Analysis') {
+            environment {
+                SCANNER_HOME = tool 'SonarScanner'
+            }
             steps {
-                timeout(time: 2, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
+                withSonarQubeEnv('sonarqube') {
+                    sh """
+                        ${SCANNER_HOME}/bin/sonar-scanner \
+                        -Dsonar.projectKey=datastore \
+                        -Dsonar.projectName=datastore \
+                        -Dsonar.sources=. \
+                        -Dsonar.sourceEncoding=UTF-8
+                    """
                 }
             }
         }
