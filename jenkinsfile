@@ -67,7 +67,7 @@ pipeline {
             steps{
                 sh """
                 echo '------tagging Docker Image-----'
-                docker tag datastore:"${App_Version}" 890871562773/datastore:"${App_Version}"
+                docker tag datastore:"${App_Version}" harshalpantawane/datastore:"${App_Version}"
                 echo '------Tagging Docker Image Complete---'
                 """
             }
