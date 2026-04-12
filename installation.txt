@@ -1,0 +1,57 @@
+###### install java-17 ######
+sudo yum update -y
+sudo yum install java-17-amazon-corretto -y
+
+#### add jenkins repo ######
+sudo wget -O /etc/yum.repos.d/jenkins.repo \
+https://pkg.jenkins.io/redhat-stable/jenkins.repo
+
+#### impoer jenkins key ####3
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+
+###### install jenkins ######
+sudo yum install jenkins -y
+
+sudo systemctl start jenkins
+sudo systemctl enable jenkins
+sudo systemctl status jenkins
+
+######## install git #######
+sudo yum install git -y
+
+###### install maven ######
+sudo yum install maven -y
+mvn -version
+sudo systemctl restart jenkins
+
+####### make sure you have created bucket for jar file #####
+
+###### install Docker for image build #######
+sudo yum install docker -y
+sudo systemctl start docker 
+
+###### fix permission ( vimp) ####
+sudo usermod -aG docker jenkins
+
+sudo systemctl restart jenkins
+sudo systemctl restart docker
+
+####### verify access #########
+sudo -u jenkins docker ps
+
+###### install Trivy via rpm repo ########
+sudo tee /etc/yum.repos.d/trivy.repo <<EOF
+[trivy]
+name=Trivy repository
+baseurl=https://aquasecurity.github.io/trivy-repo/rpm/releases/\$basearch/
+enabled=1
+gpgcheck=0
+EOF
+
+########## install trivy ######
+sudo dnf clean all
+sudo dnf install -y trivy
+
+trivy --version
+
+
