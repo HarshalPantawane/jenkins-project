@@ -2,11 +2,11 @@
 sudo yum update -y
 sudo yum install java-17-amazon-corretto -y
 
-#### add jenkins repo ######
+#### add jenkins repo to install jenkins ######
 sudo wget -O /etc/yum.repos.d/jenkins.repo \
 https://pkg.jenkins.io/redhat-stable/jenkins.repo
 
-#### impoer jenkins key ####3
+#### import jenkins key ####
 sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
 
 ###### install jenkins ######
@@ -16,13 +16,33 @@ sudo systemctl start jenkins
 sudo systemctl enable jenkins
 sudo systemctl status jenkins
 
-######## install git #######
+######## install git to clone repo #######
 sudo yum install git -y
 
-###### install maven ######
+###### install maven for java ######
 sudo yum install maven -y
 mvn -version
 sudo systemctl restart jenkins
+
+####### Sonarqube Scanner installation to scan code ###########
+cd /opt
+
+sudo wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-7.0.2.4839-linux-x64.zip
+
+sudo unzip sonar-scanner-cli-7.0.2.4839-linux-x64.zip
+
+sudo mv sonar-scanner-7.0.2.4839-linux-x64 sonar-scanner
+
+####  add env variable #############
+sudo vi /etc/profile.d/sonar.sh
+
+export SONAR_SCANNER_HOME=/opt/sonar-scanner
+export PATH=$PATH:$SONAR_SCANNER_HOME/bin
+
+####### reload and verify #########
+source /etc/profile.d/sonar.sh
+
+sonar-scanner -v
 
 ####### make sure you have created bucket for jar file #####
 
@@ -31,7 +51,7 @@ sudo yum install docker -y
 sudo systemctl start docker 
 
 ###### fix permission ( vimp) ####
-sudo usermod -aG docker jenkins
+sudo usermod -aG docker jenkins     // jenkins work on Docker
 
 sudo systemctl restart jenkins
 sudo systemctl restart docker
@@ -48,10 +68,10 @@ enabled=1
 gpgcheck=0
 EOF
 
-########## install trivy ######
+########## install trivy for vulnerability scanneron jenkins server ######
 sudo dnf clean all
 sudo dnf install -y trivy
 
 trivy --version
 
-
+  
